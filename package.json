@@ -1,0 +1,26 @@
+{
+  "name": "md5-decrypter",
+  "version": "1.0.0",
+  "description": "md5-decrypter using a dictionary of words and anagrams",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js --anagram 'poultry outwits ants' --md5 4624d200580677270a54ccff86b9610e",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Etchs/md5-decrypter.git"
+  },
+  "keywords": [
+    "md5-decrypter"
+  ],
+  "author": "Hesham",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Etchs/md5-decrypter/issues"
+  },
+  "homepage": "https://github.com/Etchs/md5-decrypter#readme",
+  "dependencies": {
+    "md5": "^2.2.1"
+  }
+}
