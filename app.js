@@ -1,6 +1,6 @@
 var decrypter = require('./engine/decrypter');
 
-var md5Hash = '4624d200580677270a54ccff86b9610e';
+var md5Hash = 'e4820b45d2277f3844eac66c903e84be';
 var anagram = 'poultry outwits ants';
 var wordlistPath = './wordlist';
 

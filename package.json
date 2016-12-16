@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/Etchs/md5-decrypter#readme",
   "dependencies": {
+    "async": "^2.1.4",
+    "lodash": "^4.17.2",
     "md5": "^2.2.1"
   }
 }
