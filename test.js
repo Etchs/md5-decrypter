@@ -18,21 +18,20 @@ if (cluster.isMaster) {
   }
 
   cluster.on('exit', (worker, code, signal) => {
-    console.log(`worker ${worker.process.pid} died`);
-    if (worker.id===3){
-    	cluster.fork();
+    if (Object.getOwnPropertyNames(cluster.workers).length === 0){
+    	console.log('All workers finished');
     }
   });
 } else {
   // Workers can share any TCP connection
   // In this case it is an HTTP server
-  console.log('cluster.worker', cluster.worker.id);
+  // console.log('cluster.worker', cluster.worker.id);
   // if(cluster.worker.id == 3) {
-  // 	process.exit(0);
+  	process.exit(0);
   // }
-  process.on('message', (msg) => {
-    console.log(msg.i + ' / ' + numCPUs);
-  });
+  // process.on('message', (msg) => {
+  //   console.log(msg.i + ' / ' + numCPUs);
+  // });
 }
   
 
