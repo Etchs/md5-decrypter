@@ -2,6 +2,41 @@
 const _ = require('lodash');
 const prompts = require('readline').createInterface(process.stdin, process.stdout);
 
+const _showUpdate = function(msg) {
+	// process.stdout.write('\033c');
+	process.stdout.write('\x1B[2J\x1B[0f');
+	process.stdout.write(msg);
+};
+
+const _initProgress = function(progressReport, message) {
+	progressReport[0] = message.allCandidateWordsArrayLength;
+	progressReport[1] = '';
+	for (let i = 2; i <= message.maxPhraseWordsNum; i++) {
+		progressReport[i] = [];
+	}
+};
+
+const _updateProgress = function(progressReport, message) {
+	progressReport[message.phraseWordsNum][message.workerId] = {
+		currIndex: message.currIndex,
+		maxIndex: message.maxIndex
+	};
+
+	let log = progressReport[1];
+	for (let i = 2; i < progressReport.length; i++) {
+		let total = 0;
+		for (let j = 0; j < progressReport[i].length; j++) {
+			if (typeof progressReport[i][j] !== 'undefined') {
+				total += progressReport[i][j].currIndex;
+			}
+		}
+		if (progressReport[i].length) {
+			log += '\nChecked ' + (total * 100 / progressReport[0]).toFixed(2) + ' % of phrases containing ' + i + ' words';
+		}
+	}
+	_showUpdate(log);
+};
+
 module.exports = {
 	getPrompts: function(options, code, cb) {
 		switch (code) {
@@ -63,39 +98,28 @@ module.exports = {
 		return new RegExp(regexString);
 	},
 
-	initProgress: function(progressReport, message) {
-		progressReport[0] = message.allCandidateWordsArrayLength;
-		progressReport[1] = '';
-		for (let i = 2; i <= message.maxPhraseWordsNum; i++) {
-			progressReport[i] = [];
-		}
-	},
+	msgHandler: function(progressReport, message, matchings, md5HashesNum) {
+		if (message.msgType === 'progressReport') {
+			_updateProgress(progressReport, message);
+		} else if (!progressReport[0] && message.msgType === 'initProgressReport') {
+			_initProgress(progressReport, message);
+		} else if (message.msgType === 'matchFound') {
+			matchings.push({
+				matchingHash: message.matchingHash,
+				matchingPhrase: message.matchingPhrase
+			});
+			progressReport[1] = 'The matching phrases found so far are:';
+			matchings.forEach(function(match) {
+				progressReport[1] += '\n"' + match.matchingPhrase + '" for the md5 hash: ' + match.matchingHash;
+			});
 
-	updateProgress: function(progressReport, message) {
-		progressReport[message.phraseWordsNum][message.workerId] = {
-			currIndex: message.currIndex,
-			maxIndex: message.maxIndex
-		};
-
-		let log = progressReport[1];
-		for (let i = 2; i < progressReport.length; i++) {
-			let total = 0;
-			for (let j = 0; j < progressReport[i].length; j++) {
-				if (typeof progressReport[i][j] !== 'undefined') {
-					total += progressReport[i][j].currIndex;
-				}
-			}
-			if (progressReport[i].length) {
-				log += (total * 100 / progressReport[0]).toFixed(2) + ' % of ' + i + ' words phrases completed\n';
+			if (matchings.length === md5HashesNum) {
+				process.stdout.write('\x1B[2J\x1B[0f');
+				console.log('Found All Matching Phrases!');
+				console.log(progressReport[1]);
+				console.log('Exiting...');
+				process.exit(0);
 			}
 		}
-		showMessage(log);
 	}
-};
-
-var showMessage = function(msg) {
-	process.stdout.write('\x1Bc');
-	// process.stdout.clearLine();
-	// process.stdout.cursorTo(0);
-	process.stdout.write(msg);
 };
