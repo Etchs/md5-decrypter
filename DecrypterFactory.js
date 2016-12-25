@@ -34,7 +34,8 @@ Decrypter.prototype = {
 
 	decrypt: function() {
 		this.allCandidateWords = _.uniq(this.allCandidateWords);
-		
+		this.allCandidateWords.sort();
+		this.allCandidateWords.reverse();
 		this.allCandidateWords.sort(function(a, b) {
 			return (a.length - b.length);
 		});
