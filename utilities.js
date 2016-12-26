@@ -3,8 +3,7 @@ const _ = require('lodash');
 const prompts = require('readline').createInterface(process.stdin, process.stdout);
 
 const _showUpdate = function(msg) {
-	// process.stdout.write('\033c');
-	process.stdout.write('\x1B[2J\x1B[0f');
+	process.stdout.write('\033c');
 	process.stdout.write(msg);
 };
 
@@ -114,7 +113,7 @@ module.exports = {
 			});
 
 			if (matchings.length === md5HashesNum) {
-				process.stdout.write('\x1B[2J\x1B[0f');
+				process.stdout.write('\033c');
 				console.log('Found All Matching Phrases!');
 				console.log(progressReport[1]);
 				console.log('Exiting...');
