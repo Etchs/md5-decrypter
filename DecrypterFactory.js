@@ -56,15 +56,13 @@ Decrypter.prototype = {
 		this.maxIndex = selectedCandidateWords.length;
 		for (; this.currPhraseWordsNum <= this.maxPhraseWordsNum; this.currPhraseWordsNum++) {
 			for (this.currIndex = 0; this.currIndex < this.maxIndex; this.currIndex++) {
-				// if (this.currIndex % 5 === 0 || this.currIndex === this.maxIndex - 1) {
-					process.send({
-						msgType: 'progressReport',
-						workerId: this.workerId,
-						phraseWordsNum: this.currPhraseWordsNum,
-						currIndex: this.currIndex + 1,
-						maxIndex: this.maxIndex
-					});
-				// }
+				process.send({
+					msgType: 'progressReport',
+					workerId: this.workerId,
+					phraseWordsNum: this.currPhraseWordsNum,
+					currIndex: this.currIndex + 1,
+					maxIndex: this.maxIndex
+				});
 				this.test(null, selectedCandidateWords[this.currIndex], this.currPhraseWordsNum);
 			}
 		}
