@@ -4,6 +4,7 @@ const prompts = require('readline').createInterface(process.stdin, process.stdou
 
 const _showUpdate = function(msg) {
 	process.stdout.write('\033c');
+	process.stdout.cursorTo(0);
 	process.stdout.write(msg);
 };
 
@@ -107,7 +108,7 @@ module.exports = {
 				matchingHash: message.matchingHash,
 				matchingPhrase: message.matchingPhrase
 			});
-			progressReport[1] = 'The matching phrases found so far are:';
+			progressReport[1] = 'The matching phrases found are:';
 			matchings.forEach(function(match) {
 				progressReport[1] += '\n"' + match.matchingPhrase + '" for the md5 hash: ' + match.matchingHash;
 			});
