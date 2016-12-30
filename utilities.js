@@ -4,7 +4,6 @@ const prompts = require('readline').createInterface(process.stdin, process.stdou
 
 const _showUpdate = function(msg) {
 	process.stdout.write('\033c');
-	process.stdout.cursorTo(0);
 	process.stdout.write(msg);
 };
 
