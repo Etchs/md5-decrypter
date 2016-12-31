@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
-const utilities = require('./utilities');
-const DecrypterFactory = require('./DecrypterFactory');
+const utilities = require('./lib/utilities');
+const DecrypterFactory = require('./lib/DecrypterFactory');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
 // const numCPUs = 1;
