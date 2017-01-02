@@ -44,7 +44,7 @@ if (cluster.isMaster) {
 	cluster.on('exit', (worker, code, signal) => {
 		if (Object.getOwnPropertyNames(cluster.workers).length === 0 && matchings.length < md5HashesNum) {
 			process.stdout.write('\033c');
-			console.log('All workers finished, but could not find matching phrases!');
+			console.log('All workers finished, but could not find all matching phrases!');
 			console.log(progressReport[1]);
 			process.exit(0);
 		}
