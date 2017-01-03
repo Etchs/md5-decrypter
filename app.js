@@ -3,7 +3,6 @@ const utilities = require('./lib/utilities');
 const DecrypterFactory = require('./lib/DecrypterFactory');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
-// const numCPUs = 1;
 let progressReport = [];
 let matchings = [];
 
